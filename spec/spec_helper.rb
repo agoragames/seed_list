@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'factory_girl_rails'
 
 Spork.prefork do
 
