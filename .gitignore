@@ -25,3 +25,4 @@ vendor/cache
 .code_swarm
 .jhw-cache
 *.orig
+spec/dummy/log/*.log
