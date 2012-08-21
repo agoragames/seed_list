@@ -89,5 +89,15 @@ SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
 SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
  => [1, 2, 3, 4]
 
-
 ```
+## License
+
+See the [MIT-LICENSE](https://github.com/agoragames/seed_list/blob/master/MIT-LICENSE) file.
+
+## Contributions
+
+Contributions are awesome. Feature branch pull requests are the preferred method.
+
+## Author
+
+Written by [Logan Koester](https://github.com/logankoester)
