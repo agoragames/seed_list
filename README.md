@@ -63,3 +63,31 @@ t.reload
 
 ```
 
+## Strategies
+
+Once your players have been created and moved to the appropriate seed positions, you can use
+the included seeding strategies to match them up appropriately in the first round of the bracket.
+
+You can easily implement your own strategies as well. The initializer must accept an array
+of objects that respond to #seed with an integer, and the #seed method must return an array
+of those objects sorted appropriately as pairs.
+
+```ruby
+
+t.players.map { |p| p.seed }
+ => [1, 2, 3 , 4]
+
+# A Knockout tournament matches players at random. The seed position is irrelevant.
+SeedList::Strategy::Knockout.new(t.players).seed.map { |p| p.seed }
+ => [2, 3, 4, 1]
+
+# A Playoff tournament matches the best players against the worst.
+SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
+ => [1, 4, 2, 3]
+
+# An Amateur tournament matches by skill similarity straight down
+SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
+ => [1, 2, 3, 4]
+
+
+```
