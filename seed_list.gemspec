@@ -7,13 +7,13 @@ require 'seed_list/version'
 Gem::Specification.new do |s|
   s.name        = 'seed_list'
   s.version     = SeedList::VERSION
-  s.authors     = ['TODO: Your name']
-  s.email       = ['TODO: Your email']
-  s.homepage    = 'TODO'
-  s.summary     = 'TODO: Summary of SeedList.'
-  s.description = 'TODO: Description of SeedList.'
+  s.authors     = ['Logan Koester']
+  s.email       = ['lkoester@majorleaguegaming.com']
+  s.homepage    = 'https://github.com/agoragames/seed_list'
+  s.summary     = 'Seed management for tournament brackets'
+  s.description = 'SeedList is designed for Rails-powered tournament engines that need to persist a 1-indexed ordered list of players (ranked low-to-high by skill or past performance) and then match them up appropriately in the first round of a bracket.'
 
-  s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.rdoc']
+  s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'rails', '~> 3.2.6'
 
