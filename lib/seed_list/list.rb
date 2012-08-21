@@ -28,7 +28,8 @@ module SeedList
     end
 
     def find(s)
-      @list.index(s) + 1
+      i = @list.index(s)
+      i.nil? ? nil : i + 1
     end
 
   end
