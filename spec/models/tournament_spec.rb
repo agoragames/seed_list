@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Tournament do
   let(:tournament){ FactoryGirl.create :tournament }
   subject { tournament }
