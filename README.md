@@ -86,7 +86,7 @@ SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
  => [1, 4, 2, 3]
 
 # An Amateur tournament matches by skill similarity straight down
-SeedList::Strategy::Playoff.new(t.players).seed.map { |p| p.seed }
+SeedList::Strategy::Amateur.new(t.players).seed.map { |p| p.seed }
  => [1, 2, 3, 4]
 
 ```
