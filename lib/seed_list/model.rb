@@ -6,6 +6,9 @@ module SeedList
       def seed(assoc_name)
         assoc_name = assoc_name.to_s
 
+        SeedList.tournament_class_name = self.name
+        SeedList.player_class_name = assoc_name.camelize
+
         eval "serialize :#{assoc_name}_seed_list, SeedList::List"
 
         assoc_name.classify.constantize.class_eval <<-CODE

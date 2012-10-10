@@ -3,6 +3,7 @@ PATH
   specs:
     seed_list (0.0.1)
       rails (~> 3.2.6)
+      thor
 
 GEM
   remote: http://rubygems.org/

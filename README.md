@@ -90,6 +90,51 @@ SeedList::Strategy::Amateur.new(t.players).seed.map { |p| p.seed }
  => [1, 2, 3, 4]
 
 ```
+
+## Utilities
+
+SeedList includes a few [Thor](https://github.com/wycats/thor/) tasks to
+make seeds easy to manage from the command line.
+
+### Setup
+
+Thor must load the Rails environment to import tasks from SeedList and other gems.
+
+**lib/tasks/environment.thor**
+```ruby
+  require File.expand_path('config/environment')
+
+```
+
+    $ thor list
+    seed_list
+    ---------
+    thor seed_list:edit TOURNAMENT_ID    # Reposition seeds using EDITOR (interactive)
+    thor seed_list:export TOURNAMENT_ID  # Export line-separated seeds to STDOUT
+    thor seed_list:import TOURNAMENT_ID  # Import line-separated seeds from STDIN
+
+
+Your Player model is assumed to have a #login attribute to use these tasks.
+
+### Examples
+
+Export seeds to a file
+
+    $ thor seed_list:export TOURNAMENT_ID > ./seeds
+    $ cat seeds
+    albafunk
+    deborahbayerii
+    ramonalockman
+    danlind
+
+Import seeds from a file
+
+    $ cat ./seeds | thor seed_list:import TOURNAMENT_ID
+
+Edit seeds in [VIM](http://www.vim.org/)
+
+    $ EDITOR=vim thor seed_list:edit TOURNAMENT_ID
+
 ## License
 
 See the [MIT-LICENSE](https://github.com/agoragames/seed_list/blob/master/MIT-LICENSE) file.
