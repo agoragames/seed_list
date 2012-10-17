@@ -1,5 +1,5 @@
 module SeedList
-  module Model
+  module Association
     extend ActiveSupport::Concern
 
     module ClassMethods
@@ -38,4 +38,4 @@ module SeedList
   end
 end
 
-ActiveRecord::Base.send :include, SeedList::Model
+ActiveRecord::Base.send :include, SeedList::Association

@@ -33,7 +33,6 @@ describe Tournament do
       end
     end
 
-
   end
 
   describe 'when 4 players exist' do
@@ -74,4 +73,5 @@ describe Tournament do
     end
 
   end
+
 end
