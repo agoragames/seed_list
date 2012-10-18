@@ -27,7 +27,7 @@ end
 
 ```ruby
 
-add_column :tournaments, :players_seed_list, :text
+rake seed_list:install:migrations db:migrate
 
 ```
 
@@ -35,13 +35,16 @@ add_column :tournaments, :players_seed_list, :text
 ```ruby
 
 t = Tournament.create
- => #<Tournament id: 2, players_seed_list: #<SeedList::List:0x00000002aeff68 @list=[]>>
+ => #<Tournament id: 2>
+
+t.seed_list
+ => #<SeedList::Model id: 2, tournament_id: 2, tournament_type: "Tournament", list: #<SeedList::List:0x00000003a74c40 @list=[]>>
 
 p = t.players.create
- => #<Player id: 16, tournament_id: 2> 
+ => #<Player id: 5, tournament_id: 2> 
 
-t.reload
- => #<Tournament id: 2, players_seed_list: #<SeedList::List:0x00000002d342d8 @list=[16]>> 
+t.seed_list.list
+ => #<SeedList::List:0x00000002e0b878 @list=[5]>
 
 # Seed numbers start at 1
 p.seed
@@ -58,8 +61,8 @@ position. You can then move the seed to another position in the list.
 
 p.seed = 4
 
-t.reload
- => #<Tournament id: 2, players_seed_list: #<SeedList::List:0x00000002d342d8 @list=[17, 18, 19, 16]>> 
+t.seed_list.list
+ => #<SeedList::List:0x00000003ca7468 @list=[6, 7, 8, 5]> 
 
 ```
 
@@ -134,6 +137,12 @@ Import seeds from a file
 Edit seeds in [VIM](http://www.vim.org/)
 
     $ EDITOR=vim thor seed_list:edit TOURNAMENT_ID
+
+
+## Upgrading from < 1.0.0
+
+The serialized column "*_seed_list" on your "tournaments" table has moved to a column called "list" on the seed_lists table created by a migration included in >= 1.0.0. You will
+need to write your own migration to create an associated SeedList::Model object for each of your existing tournaments and copy the existing list into it. You can then safely remove the deprecated "*_seed_list" column.
 
 ## License
 
