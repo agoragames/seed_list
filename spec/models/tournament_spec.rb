@@ -4,13 +4,11 @@ describe Tournament do
   let(:tournament){ FactoryGirl.create :tournament }
   subject { tournament }
 
-  its(:serialized_attributes) { subject.keys.should include('players_seed_list') }
-
-  describe '#players_seed_list' do
-    subject { tournament.players_seed_list }
+  describe '#seed_list' do
+    subject { tournament.seed_list }
 
     it 'should initialize empty' do
-      subject.instance_variable_get(:@list).size.should eql 0
+      subject.list.instance_variable_get(:@list).size.should eql 0
     end
 
     describe 'when a single player is added' do
@@ -20,8 +18,8 @@ describe Tournament do
 
       describe 'the tournament' do
         subject { tournament }
-        it 'should contain that player after reload' do
-          subject.reload.players_seed_list.instance_variable_get(:@list).should include(@player.id)
+        it 'should contain that player' do
+          subject.seed_list.list.instance_variable_get(:@list).should include(@player.id)
         end
       end
 
@@ -38,11 +36,11 @@ describe Tournament do
   describe 'when 4 players exist' do
     before { 4.times { tournament.players.create } }
 
-    describe '#players_seed_list' do
-      subject { tournament.reload.players_seed_list }
+    describe '#seed_list' do
+      subject { tournament.seed_list }
 
       it 'should contain 4 players' do
-        subject.instance_variable_get(:@list).size.should eql 4
+        subject.list.instance_variable_get(:@list).size.should eql 4
       end
     end
 
@@ -57,7 +55,7 @@ describe Tournament do
         before { tournament.players.first.seed = 4 }
 
         describe '@list' do
-          subject { tournament.reload.players_seed_list.instance_variable_get(:@list) }
+          subject { tournament.seed_list.list.instance_variable_get(:@list) }
 
           it 'reflect the new seed order' do
             subject.should eql [

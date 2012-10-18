@@ -9,30 +9,61 @@ module SeedList
         SeedList.tournament_class_name = self.name
         SeedList.player_class_name = assoc_name.camelize
 
-        eval "serialize :#{assoc_name}_seed_list, SeedList::List"
+        has_one :seed_list,
+          as: :tournament,
+          class_name: SeedList::Model,
+          dependent: :destroy,
+          readonly: true
 
-        assoc_name.classify.constantize.class_eval <<-CODE
-          after_create  do |p| 
-            p.#{self.name.downcase}.#{assoc_name}_seed_list.push(p.id)
-            p.#{self.name.downcase}.save
+        class_eval do
+          def seed_list(skip_cache = true)
+            super skip_cache
+          end
+        end
+
+        after_create { |t| t.create_seed_list }
+
+        seed_list_query = <<-QUERY
+          SeedList::Model.where({
+            tournament_id: p.#{self.name.downcase}_id,
+            tournament_type: '#{self.name.to_s}'
+          }).first
+        QUERY
+
+        assoc_name.classify.constantize.class_eval <<-PLAYER
+          after_create do |p|
+            seed_list = #{seed_list_query}
+            seed_list.with_lock do
+              seed_list.push(p.id)
+              seed_list.save
+            end
           end
 
           after_destroy do |p|
-            p.#{self.name.downcase}.#{assoc_name}_seed_list.delete(p.id)
-            p.#{self.name.downcase}.save
+            seed_list = #{seed_list_query}
+            seed_list.with_lock do
+              seed_list.delete(p.id)
+              seed_list.save
+            end
           end
 
           def seed
-            #{self.name.downcase}.#{assoc_name}_seed_list.find(id)
+            p = self
+            #{seed_list_query}.find(id)
           end
 
           def seed=(n)
-            #{self.name.downcase}.#{assoc_name}_seed_list.move(id, n)
-            #{self.name.downcase}.save
+            p = self
+            seed_list = #{seed_list_query}
+            seed_list.with_lock do
+              seed_list.move(id, n)
+              seed_list.save
+            end
           end
-        CODE
+        PLAYER
 
       end
+
     end
 
   end

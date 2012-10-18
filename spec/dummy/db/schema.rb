@@ -11,14 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816184101) do
+ActiveRecord::Schema.define(:version => 20121018014816) do
 
   create_table "players", :force => true do |t|
     t.integer "tournament_id"
   end
 
+  create_table "seed_lists", :force => true do |t|
+    t.integer "tournament_id"
+    t.string  "tournament_type"
+    t.text    "list"
+  end
+
   create_table "tournaments", :force => true do |t|
-    t.text "players_seed_list"
   end
 
 end
