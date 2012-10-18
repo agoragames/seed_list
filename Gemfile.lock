@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    seed_list (0.1.0)
+    seed_list (1.0.0.pre)
       rails (~> 3.2.6)
       thor
 
