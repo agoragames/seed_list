@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/agoragames/seed_list'
   s.summary     = 'Seed management for tournament brackets'
   s.description = 'SeedList is designed for Rails-powered tournament engines that need to persist a 1-indexed ordered list of players (ranked low-to-high by skill or past performance) and then match them up appropriately in the first round of a bracket.'
+  s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.md']
 
